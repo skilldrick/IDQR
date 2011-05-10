@@ -3,17 +3,28 @@
 
 var tests = {
   setup: function () {
-    this.barcode_strings = [];
-    this.barcode_strings.push('978-1-906230-16-6\n');
-    this.barcode_strings.push('978-0-7858-2744-3');
-    this.barcode_strings.push('978-1-907360-19-0');
-    this.addon = '52495';
+    this.qr = QR();
   },
 
   'test logger': function () {
     log('Testing logger...');
   },
 
+  'test quiet zone is off': function () {
+    var qr = this.qr;
+    var quietZonePoints = [[0, 0], [3, 1], [0, 3], [3, 3]];
+    forEach(quietZonePoints, function (item) {
+      assert_equal(qr.get(item[0], item[1]), 0);
+    });
+  },
+
+  'test position mark borders are on': function () {
+    var qr = this.qr;
+    var positionPoints = [[4, 4], [10, 4], [4, 10], [10, 10]];
+    forEach(positionPoints, function (item) {
+      assert_equal(qr.get(item[0], item[1]), 1);
+    });
+  },
 }
 
 
@@ -47,6 +58,12 @@ function assert_throws(msg, func) {
   }
 
   assert(msg, success);
+}
+
+function forEach(arr, callback) {
+  for (var i = 0, len = arr.length; i < len; i++) {
+    callback(arr[i]);
+  }
 }
 
 for (var test in tests) {

@@ -3,5 +3,12 @@
 }
 
 var QR = function () {
+  function get(x, y) {
+    return 0;
+  }
+
+  return {
+    get: get
+  };
 };
 
