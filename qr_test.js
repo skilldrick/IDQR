@@ -21,8 +21,8 @@ var tests = {
   'test position mark borders are on': function () {
     var qr = this.qr;
     var positionPoints = [[4, 4], [10, 4], [4, 10], [10, 10]];
-    forEach(positionPoints, function (item) {
-      assert_equal(qr.get(item[0], item[1]), 1);
+    forEach(positionPoints, function (point) {
+      assert_equal(qr.get(point), 1);
     });
   },
 }
