@@ -2,17 +2,36 @@
   $.writeln(text);
 }
 
-var QR = function () {
-  function get(x, y) {
-    if (x.length === 2) {
-      y = x[1];
-      x = x[0];
+var QR = function (version) {
+
+  function width() {
+    return version * 4 + 25;
+  }
+
+  function quietZone(coords) {
+    var x = coords[0];
+    var y = coords[1];
+    return (x < 4 || y < 4 || x >= width() - 4 || y >= width() - 4);
+  }
+
+  function get(coords) {
+    var x = coords[0];
+    var y = coords[1];
+    if (x < 0 || y < 0 || x >= width() || y >= width()) {
+      throw "Out of bounds";
     }
-    return 0;
+    if (quietZone(coords)) {
+      return 0;
+    }
+    else {
+      return 1;
+    }
   }
 
   return {
-    get: get
+    version: version,
+    get: get,
+    width: width
   };
 };
 
